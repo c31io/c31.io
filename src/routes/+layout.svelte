@@ -1,7 +1,5 @@
 <script>
     import "../app.css";
-
-    export const prerender = true;
 </script>
 
 <h1 class="text-3xl py-2 grid place-items-center select-none">c31.io</h1>
