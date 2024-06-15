@@ -8,11 +8,7 @@
     A federated monolithic pay-as-you-go backend-as-a-service cloud-retail
     project.
     <br />
-    Not ready for production.
-    <br />
-    Testing server with <tt>$SKIP_AUTH</tt> and <tt>$SAMSARA</tt>:
-    <br />
-    http://w.c31.io:8080
+    Not ready for production. Undergoing major refactorization.
 </p>
 
 <hr class="flex-col justify-center max-w-md mx-auto my-4" />
@@ -56,7 +52,5 @@
 </p>
 
 <p class="flex-col justify-center text-center px-4 max-w-md mx-auto">
-    Linux desktop config files managed by GNU Stow.
-    <br />
-    sway, mako, bspwm, picom, conky, polybar, neovim, fish...
+    NixOS config files for my machines.
 </p>
