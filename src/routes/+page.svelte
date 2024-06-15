@@ -5,8 +5,8 @@
 <p class="flex-col justify-center text-justify p-4 max-w-md mx-auto">
     <b>sonder</b>
     <br />
-    <i class="">
-        n. {$t('common.home.text')}
+    <i>
+        n. {$t('home.text')}
     </i>
     <br />
 </p>
