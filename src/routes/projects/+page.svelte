@@ -1,3 +1,16 @@
+<h2 class="text-xl py-2 grid place-items-center select-none">Amnis</h2>
+
+<p class="flex-col justify-center text-center px-4 max-w-md mx-auto underline">
+    <a href="https://github.com/c31io/amnis">GitHub</a>
+</p>
+
+<p class="flex-col justify-center text-center px-4 max-w-md mx-auto">
+  Couldn't find a query language for the VOxOV project,
+  so I created a new one.
+</p>
+
+<hr class="flex-col justify-center max-w-md mx-auto my-4" />
+
 <h2 class="text-xl py-2 grid place-items-center select-none">VOxOV</h2>
 
 <p class="flex-col justify-center text-center px-4 max-w-md mx-auto underline">
