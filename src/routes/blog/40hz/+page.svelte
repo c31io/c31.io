@@ -97,30 +97,34 @@
 </style>
 
 <script>
-  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  import { browser } from '$app/environment';
 
-  let started = false;
-  let playing = false;
-  const context = new AudioContext();
-  const gainNode = context.createGain();
-  const oscillator = context.createOscillator();
-  oscillator.frequency.value = 40;
-  oscillator.connect(gainNode);
-  gainNode.connect(context.destination);
+  let toggle = () => {}
 
-  function toggle() {
-    if (!started) {
-      oscillator.start();
-      started = true;
-    }
-    if (playing) {
-      context.suspend();
-      playing = false;
-    } else {
-      context.resume();
-      playing = true;
-    }
-  };
+  if (browser) {
+    let started = false;
+    let playing = false;
+    const context = new AudioContext();
+    const gainNode = context.createGain();
+    const oscillator = context.createOscillator();
+    oscillator.frequency.value = 40;
+    oscillator.connect(gainNode);
+    gainNode.connect(context.destination);
+
+    toggle = () => {
+      if (!started) {
+        oscillator.start();
+        started = true;
+      }
+      if (playing) {
+        context.suspend();
+        playing = false;
+      } else {
+        context.resume();
+        playing = true;
+      }
+    };
+  }
 </script>
 
 <div class="rectangle" on:click={toggle} />
