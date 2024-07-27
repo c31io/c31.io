@@ -97,6 +97,8 @@
 </style>
 
 <script>
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
   let started = false;
   let playing = false;
   const context = new AudioContext();
