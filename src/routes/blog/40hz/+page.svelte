@@ -1,16 +1,3 @@
-<div class="rectangle" onclick="play()" />
-<script>
-  function play(frequency = 40) {
-    console.log('started');
-    const context = new AudioContext();
-    const gainNode = context.createGain();
-    const oscillator = context.createOscillator();
-    oscillator.frequency.value = frequency;
-    oscillator.connect(gainNode);
-    gainNode.connect(context.destination);
-    oscillator.start(0);
-  };
-</script>
 <style>
   .rectangle {
     animation: flicker 1s infinite;
@@ -108,3 +95,30 @@
     100.00% { opacity: 1; }
   }
 </style>
+
+<script>
+  let started = false;
+  let playing = false;
+  const context = new AudioContext();
+  const gainNode = context.createGain();
+  const oscillator = context.createOscillator();
+  oscillator.frequency.value = 40;
+  oscillator.connect(gainNode);
+  gainNode.connect(context.destination);
+
+  function toggle() {
+    if (!started) {
+      oscillator.start();
+      started = true;
+    }
+    if (playing) {
+      context.suspend();
+      playing = false;
+    } else {
+      context.resume();
+      playing = true;
+    }
+  };
+</script>
+
+<div class="rectangle" on:click={toggle} />
