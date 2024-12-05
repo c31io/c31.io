@@ -9,6 +9,7 @@
   <div class="[&>*]:px-2 border-y">
     <a href="/">{$t('common.home')}</a>
     <a href="/blog">{$t('common.blog')}</a>
+    <a href="https://denmi.c31.io/">denmi</a>
     <a href="/projects">{$t('common.projects')}</a>
     <a href="/about">{$t('common.about')}</a>
     <button class="text-gray-400"
