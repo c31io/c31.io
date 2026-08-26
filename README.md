@@ -1,5 +1,5 @@
-# c31.io 
+# c31.io
 
-Install `nix`, `devenv`, and `direnv`.
+Install `nix` and `direnv`.
 
-Install `pnpm` via `devenv`.
+Install `pnpm` via the flake dev shell (`nix develop`).
