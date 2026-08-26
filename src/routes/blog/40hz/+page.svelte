@@ -8,6 +8,8 @@
     bottom: 0;
     right: 0;
     background: gray;
+    border: 0;
+    padding: 0;
     transition: all 1ms;
   }
   @-webkit-keyframes flicker {
@@ -127,4 +129,4 @@
   }
 </script>
 
-<div class="rectangle" on:click={toggle} />
+<button class="rectangle" aria-label="Toggle 40Hz tone" onclick={toggle}></button>

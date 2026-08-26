@@ -1,12 +1,6 @@
 <script>
-	/** @type {string} */
-	export let name;
-	/** @type {Array<{label: string, href: string}>} */
-	export let links = [];
-	/** @type {string} */
-	export let description;
-	/** @type {boolean} */
-	export let last = false;
+	/** @type {{ name: string, links?: Array<{label: string, href: string}>, description: string, isLast?: boolean }} */
+	let { name, links = [], description, isLast = false } = $props();
 </script>
 
 <h2 class="text-xl py-2 grid place-items-center select-none">{name}</h2>
@@ -24,6 +18,6 @@
 	{@html description}
 </p>
 
-{#if !last}
+{#if !isLast}
 	<hr class="flex-col justify-center max-w-md mx-auto my-4" />
 {/if}

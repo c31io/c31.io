@@ -47,5 +47,5 @@
 </script>
 
 {#each projects as project, i}
-	<Project {...project} last={i === projects.length - 1} />
+	<Project {...project} isLast={i === projects.length - 1} />
 {/each}

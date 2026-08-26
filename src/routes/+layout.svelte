@@ -1,6 +1,6 @@
 <script>
   import "../app.css";
-  import { setLocale, locale, t } from "$lib";
+  import { setLocale, locale, otherLocale, localeLabel, t } from "$lib";
 </script>
 
 <h1 class="text-3xl py-2 grid place-items-center select-none">c31.io</h1>
@@ -11,17 +11,12 @@
     <a href="/projects">{$t('common.projects')}</a>
     <a href="/about">{$t('common.about')}</a>
     <button class="text-gray-400"
-      on:click={() => {
-        if (locale.get() === 'en') {
-          console.log('here')
-          setLocale('zh');
-          localStorage.setItem('locale', 'zh');
-        } else {
-          setLocale('en');
-          localStorage.setItem('locale', 'en');
-        }
+      onclick={() => {
+        const next = otherLocale(locale.get());
+        setLocale(next);
+        localStorage.setItem('locale', next);
       }}
-    >{$locale === 'en' ? 'en' : '中'}</button>
+    >{localeLabel[$locale] ?? $locale}</button>
   </div>
 </nav>
 

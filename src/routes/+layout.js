@@ -1,16 +1,12 @@
 export const prerender = true;
 
 import { browser } from '$app/environment';
-import { loadTranslations } from '../lib';
+import { loadTranslations, supportedLocales, defaultLocale } from '../lib';
 
 /** @type {import('@sveltejs/kit').Load} */
 export const load = async ({ url }) => {
-  let initLocale = browser ? localStorage.getItem('locale') : 'en';
-
-  if (browser && !initLocale) {
-    initLocale = 'en';
-    localStorage.setItem('locale', 'en');
-  }
+  const stored = browser ? localStorage.getItem('locale') : null;
+  const initLocale = stored && supportedLocales.includes(stored) ? stored : defaultLocale;
 
   const { pathname } = url;
 

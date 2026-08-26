@@ -1,8 +1,10 @@
 import i18n from 'sveltekit-i18n';
+import { supportedLocales } from './locale';
 
+/** @type {NonNullable<import('sveltekit-i18n').Config['loaders']>} */
 const loaders = [];
 
-['en', 'zh'].forEach((l) => {
+supportedLocales.forEach((l) => {
   ['common', 'home'].forEach((k) => {
     loaders.push({
       locale: l,
