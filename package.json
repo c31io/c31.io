@@ -15,6 +15,7 @@
 		"@sveltejs/kit": "^2.70.3",
 		"@sveltejs/vite-plugin-svelte": "^7.3.0",
 		"@tailwindcss/vite": "^4.3.3",
+		"@webgpu/types": "^0.1.74",
 		"svelte": "^5.56.10",
 		"svelte-check": "^4.7.6",
 		"tailwindcss": "^4.3.3",
