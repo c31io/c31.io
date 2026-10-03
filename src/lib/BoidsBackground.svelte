@@ -3,6 +3,7 @@
   import shader from './boids.wgsl?raw';
 
   const BOID_COUNT = 160;
+  const WORKGROUP_COUNT = Math.ceil(BOID_COUNT / 64);
   const FRAME_INTERVAL = 1000 / 30;
 
   /** @type {HTMLCanvasElement} */
@@ -13,7 +14,6 @@
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
     const parameters = new Float32Array(12);
-    new Uint32Array(parameters.buffer)[3] = BOID_COUNT;
 
     /** @type {GPUDevice | undefined} */
     let device;
@@ -29,6 +29,7 @@
     let frame = 0;
     let lastTime = 0;
     let nextTime = 0;
+    let simulationTime = 0;
 
     function stop() {
       cancelAnimationFrame(frame);
@@ -60,10 +61,13 @@
       const pixelHeight = Math.max(1, Math.round(height * scale));
       if (canvas.width !== pixelWidth) canvas.width = pixelWidth;
       if (canvas.height !== pixelHeight) canvas.height = pixelHeight;
-      parameters[0] = width / height;
-      parameters[1] = 1;
-      parameters[8] = 2 / width;
-      parameters[9] = 2 / height;
+      const aspect = width / height;
+      parameters[0] = aspect * 1.2;
+      parameters[1] = 1.2;
+      parameters[2] = 0.9;
+      parameters[8] = 2 / aspect;
+      parameters[9] = 2;
+      parameters[10] = 1 / height;
     }
 
     function updateColor() {
@@ -119,14 +123,21 @@
           release();
         });
 
-        const initial = new Float32Array(BOID_COUNT * 4);
+        const initial = new Float32Array(BOID_COUNT * 8);
         for (let i = 0; i < BOID_COUNT; i++) {
+          const offset = i * 8;
           const angle = Math.random() * Math.PI * 2;
-          const speed = 0.028 + Math.random() * 0.012;
-          initial[i * 4] = Math.random();
-          initial[i * 4 + 1] = Math.random();
-          initial[i * 4 + 2] = Math.cos(angle) * speed;
-          initial[i * 4 + 3] = Math.sin(angle) * speed;
+          const vertical = Math.random() * 2 - 1;
+          const planar = Math.sqrt(1 - vertical * vertical);
+          const speed = 0.055 + Math.random() * 0.03;
+          initial[offset] = (Math.random() - 0.5) * 0.85;
+          initial[offset + 1] = (Math.random() - 0.5) * 0.85;
+          initial[offset + 2] = (Math.random() - 0.5) * 0.85;
+          initial[offset + 3] = Math.random() * Math.PI * 2;
+          initial[offset + 4] = Math.cos(angle) * planar * speed;
+          initial[offset + 5] = Math.sin(angle) * planar * speed;
+          initial[offset + 6] = vertical * speed;
+          initial[offset + 7] = speed;
         }
         const states = [0, 1].map(() => gpu.createBuffer({
           size: initial.byteLength,
@@ -211,7 +222,10 @@
             frame = requestAnimationFrame(draw);
             return;
           }
-          parameters[2] = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0;
+          const delta = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0;
+          parameters[3] = delta;
+          simulationTime += delta;
+          parameters[11] = simulationTime;
           lastTime = time;
           nextTime = time + FRAME_INTERVAL - ((time - nextTime) % FRAME_INTERVAL);
           try {
@@ -220,7 +234,7 @@
             const compute = encoder.beginComputePass();
             compute.setPipeline(simulation);
             compute.setBindGroup(0, groups[current]);
-            compute.dispatchWorkgroups(Math.ceil(BOID_COUNT / 64));
+            compute.dispatchWorkgroups(WORKGROUP_COUNT);
             compute.end();
             current = 1 - current;
             attachment.view = gpuContext.getCurrentTexture().createView();
