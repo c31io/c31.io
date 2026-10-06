@@ -7,7 +7,7 @@
 <BoidsBackground />
 
 <div class="relative z-10">
-  <h1 class="text-3xl py-2 grid place-items-center select-none">c31.io</h1>
+  <h1 class="text-3xl py-2 pt-5 grid place-items-center select-none">c31.io</h1>
 
   <nav class="select-none grid place-items-center my-4">
     <div class="[&>*]:px-2 border-y">
